@@ -1146,15 +1146,15 @@ class _RequestCard extends StatelessWidget {
                             ? '—'
                             : '${request.priority}',
                       ),
-                      if (!compact) ...[
-                        const SizedBox(width: 30),
-                        _CardMetric(
-                          label: 'Priority',
-                          value: request.priority.isEmpty
-                              ? 'Normal'
-                              : request.priority,
-                        ),
-                      ],
+                      // if (!compact) ...[
+                      //   const SizedBox(width: 30),
+                      //   _CardMetric(
+                      //     label: 'Priority',
+                      //     value: request.priority.isEmpty
+                      //         ? 'Normal'
+                      //         : request.priority,
+                      //   ),
+                      // ],
                     ],
                   ),
                 ],

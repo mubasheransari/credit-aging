@@ -1,9 +1,7 @@
 
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../app_theme.dart';
 import '../models/models.dart';
 import '../services/api_service.dart';

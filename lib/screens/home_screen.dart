@@ -436,130 +436,278 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     );
   }
 
+
   Widget _buildHeader() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 18, 20, 4),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const _LogoMark(),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'MEZAN',
-                  style: GoogleFonts.manrope(
-                    fontSize: 11,
-                    letterSpacing: 2.1,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-                Text(
-                  'Credit aging',
-                  style: GoogleFonts.manrope(
-                    fontSize: 12,
-                    color: kMutedInk,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
+  return Padding(
+    padding: const EdgeInsets.fromLTRB(0, 18, 20, 4),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        SizedBox(width: 10,),
+        // Logo - LEFT
+        SizedBox(
+          width: 82,
+          height: 72,
+          child: Image.asset(
+            'assets/logo.png',
+            fit: BoxFit.contain,
           ),
-          _HeaderNotificationButton(
-            count: _notificationCount,
-            onTap: () async {
-              await Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => const NotificationListScreen(),
-                ),
-              );
-              if (!mounted) return;
-              setState(() {
-                _notificationCount = NotificationService.history.length;
-              });
-            },
-          ),
-          const SizedBox(width: 8),
-          PopupMenuButton<String>(
-            tooltip: 'Account',
-            onSelected: (value) {
-              if (value == 'logout') _confirmLogout();
-            },
-            color: kSurface,
-            elevation: 8,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-            itemBuilder: (_) => [
-              PopupMenuItem<String>(
-                enabled: false,
-                child: SizedBox(
-                  width: 190,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        _roleLabel,
-                        style: GoogleFonts.manrope(
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-                      if ((_email ?? '').isNotEmpty) ...[
-                        const SizedBox(height: 3),
-                        Text(
-                          _email!,
-                          overflow: TextOverflow.ellipsis,
-                          style: GoogleFonts.manrope(
-                            fontSize: 11,
-                            color: kMutedInk,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ],
-                  ),
-                ),
+        ),
+
+        // Push notification + account to the RIGHT
+        const Spacer(),
+
+        // Notification
+        _HeaderNotificationButton(
+          count: _notificationCount,
+          onTap: () async {
+            await Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => const NotificationListScreen(),
               ),
-              const PopupMenuDivider(),
-              PopupMenuItem<String>(
-                value: 'logout',
-                child: Row(
+            );
+
+            if (!mounted) return;
+
+            setState(() {
+              _notificationCount =
+                  NotificationService.history.length;
+            });
+          },
+        ),
+
+        const SizedBox(width: 8),
+
+        // Account
+        PopupMenuButton<String>(
+          tooltip: 'Account',
+          onSelected: (value) {
+            if (value == 'logout') {
+              _confirmLogout();
+            }
+          },
+          color: kSurface,
+          elevation: 8,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18),
+          ),
+          itemBuilder: (_) => [
+            PopupMenuItem<String>(
+              enabled: false,
+              child: SizedBox(
+                width: 190,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Icon(Icons.logout_rounded, color: kRed, size: 19),
-                    const SizedBox(width: 10),
                     Text(
-                      'Log out',
+                      _roleLabel,
                       style: GoogleFonts.manrope(
-                        color: kRed,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w800,
                       ),
                     ),
+                    if ((_email ?? '').isNotEmpty) ...[
+                      const SizedBox(height: 3),
+                      Text(
+                        _email!,
+                        overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.manrope(
+                          fontSize: 11,
+                          color: kMutedInk,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
                   ],
                 ),
               ),
-            ],
-            child: Container(
-              width: 42,
-              height: 42,
-              decoration: BoxDecoration(
-                color: kInk,
-                borderRadius: BorderRadius.circular(13),
+            ),
+
+            const PopupMenuDivider(),
+
+            PopupMenuItem<String>(
+              value: 'logout',
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.logout_rounded,
+                    color: kRed,
+                    size: 19,
+                  ),
+                  const SizedBox(width: 10),
+                  Text(
+                    'Log out',
+                    style: GoogleFonts.manrope(
+                      color: kRed,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
               ),
-              alignment: Alignment.center,
-              child: Text(
-                (_role ?? 'U').substring(0, 1).toUpperCase(),
-                style: GoogleFonts.manrope(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w800,
-                ),
+            ),
+          ],
+          child: Container(
+            width: 42,
+            height: 42,
+            decoration: BoxDecoration(
+              color: kInk,
+              borderRadius: BorderRadius.circular(13),
+            ),
+            alignment: Alignment.center,
+            child: Text(
+              (_role ?? 'U').substring(0, 1).toUpperCase(),
+              style: GoogleFonts.manrope(
+                color: Colors.white,
+                fontWeight: FontWeight.w800,
               ),
             ),
           ),
-        ],
-      ),
-    );
-  }
+        ),
+      ],
+    ),
+  );
+}
+
+  // Widget _buildHeader() {
+  //   return Padding(
+  //     padding: const EdgeInsets.fromLTRB(0, 18, 20, 4),
+  //     child: Row(
+  //       crossAxisAlignment: CrossAxisAlignment.center,
+  //       children: [
+  //              Expanded(
+  //                child: Container(
+  //                          width: 54,
+  //                          height: 54,
+  //                          // decoration: BoxDecoration(
+  //                          //   color: inverted ? Colors.white : kInk,
+  //                          //   borderRadius: BorderRadius.circular(11),
+  //                          // ),
+  //                          child: Image.asset("assets/logo.png"),
+  //                          // child: Icon(
+  //                          //   Icons.show_chart_rounded,
+  //                          //   color: inverted ? kInk : Colors.white,
+  //                          //   size: 19,
+  //                          // ),
+  //                        ),
+  //              ),
+  //         //const _LogoMark(),
+  //         // const SizedBox(width: 12),
+  //         // Expanded(
+  //         //   child: Column(
+  //         //     crossAxisAlignment: CrossAxisAlignment.start,
+  //         //     children: [
+  //         //       Text(
+  //         //         'MEZAN',
+  //         //         style: GoogleFonts.manrope(
+  //         //           fontSize: 11,
+  //         //           letterSpacing: 2.1,
+  //         //           fontWeight: FontWeight.w800,
+  //         //         ),
+  //         //       ),
+  //         //       Text(
+  //         //         'Credit aging',
+  //         //         style: GoogleFonts.manrope(
+  //         //           fontSize: 12,
+  //         //           color: kMutedInk,
+  //         //           fontWeight: FontWeight.w600,
+  //         //         ),
+  //         //       ),
+  //         //     ],
+  //         //   ),
+  //         // ),
+  //         // 
+  //         _HeaderNotificationButton(
+  //           count: _notificationCount,
+  //           onTap: () async {
+  //             await Navigator.of(context).push(
+  //               MaterialPageRoute(
+  //                 builder: (_) => const NotificationListScreen(),
+  //               ),
+  //             );
+  //             if (!mounted) return;
+  //             setState(() {
+  //               _notificationCount = NotificationService.history.length;
+  //             });
+  //           },
+  //         ),
+  //         const SizedBox(width: 8),
+  //         PopupMenuButton<String>(
+  //           tooltip: 'Account',
+  //           onSelected: (value) {
+  //             if (value == 'logout') _confirmLogout();
+  //           },
+  //           color: kSurface,
+  //           elevation: 8,
+  //           shape:
+  //               RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+  //           itemBuilder: (_) => [
+  //             PopupMenuItem<String>(
+  //               enabled: false,
+  //               child: SizedBox(
+  //                 width: 190,
+  //                 child: Column(
+  //                   crossAxisAlignment: CrossAxisAlignment.start,
+  //                   children: [
+  //                     Text(
+  //                       _roleLabel,
+  //                       style: GoogleFonts.manrope(
+  //                         fontWeight: FontWeight.w800,
+  //                       ),
+  //                     ),
+  //                     if ((_email ?? '').isNotEmpty) ...[
+  //                       const SizedBox(height: 3),
+  //                       Text(
+  //                         _email!,
+  //                         overflow: TextOverflow.ellipsis,
+  //                         style: GoogleFonts.manrope(
+  //                           fontSize: 11,
+  //                           color: kMutedInk,
+  //                           fontWeight: FontWeight.w500,
+  //                         ),
+  //                       ),
+  //                     ],
+  //                   ],
+  //                 ),
+  //               ),
+  //             ),
+  //             const PopupMenuDivider(),
+  //             PopupMenuItem<String>(
+  //               value: 'logout',
+  //               child: Row(
+  //                 children: [
+  //                   const Icon(Icons.logout_rounded, color: kRed, size: 19),
+  //                   const SizedBox(width: 10),
+  //                   Text(
+  //                     'Log out',
+  //                     style: GoogleFonts.manrope(
+  //                       color: kRed,
+  //                       fontWeight: FontWeight.w700,
+  //                     ),
+  //                   ),
+  //                 ],
+  //               ),
+  //             ),
+  //           ],
+  //           child: Container(
+  //             width: 42,
+  //             height: 42,
+  //             decoration: BoxDecoration(
+  //               color: kInk,
+  //               borderRadius: BorderRadius.circular(13),
+  //             ),
+  //             alignment: Alignment.center,
+  //             child: Text(
+  //               (_role ?? 'U').substring(0, 1).toUpperCase(),
+  //               style: GoogleFonts.manrope(
+  //                 color: Colors.white,
+  //                 fontWeight: FontWeight.w800,
+  //               ),
+  //             ),
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Widget _buildToolbar() {
     return Padding(
@@ -993,10 +1141,10 @@ class _RequestCard extends StatelessWidget {
                       ),
                       const SizedBox(width: 30),
                       _CardMetric(
-                        label: 'Aging',
-                        value: request.requestedAgingDays == null
+                        label: 'Priority',
+                        value: request.priority == null
                             ? '—'
-                            : '${request.requestedAgingDays} days',
+                            : '${request.priority}',
                       ),
                       if (!compact) ...[
                         const SizedBox(width: 30),

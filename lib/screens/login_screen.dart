@@ -368,30 +368,30 @@ class _FormArea extends StatelessWidget {
           Row(
             children: [
               Expanded(child: Divider(color: kLine)),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: Text(
-                  'SECURE ACCESS',
-                  style: GoogleFonts.manrope(
-                    fontSize: 9,
-                    letterSpacing: 1.2,
-                    fontWeight: FontWeight.w800,
-                    color: kMutedInk,
-                  ),
-                ),
-              ),
-              Expanded(child: Divider(color: kLine)),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 12),
+              //   child: Text(
+              //     'SECURE ACCESS',
+              //     style: GoogleFonts.manrope(
+              //       fontSize: 9,
+              //       letterSpacing: 1.2,
+              //       fontWeight: FontWeight.w800,
+              //       color: kMutedInk,
+              //     ),
+              //   ),
+              // ),
+            //  Expanded(child: Divider(color: kLine)),
             ],
           ),
           const SizedBox(height: 24),
-          Text(
-            '© ${DateTime.now().year} Mezan Tea · Credit Aging',
-            style: GoogleFonts.manrope(
-              color: kMutedInk,
-              fontSize: 11,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
+          // Text(
+          //   '© ${DateTime.now().year} Mezan Tea · Credit Aging',
+          //   style: GoogleFonts.manrope(
+          //     color: kMutedInk,
+          //     fontSize: 11,
+          //     fontWeight: FontWeight.w600,
+          //   ),
+          // ),
         ],
       ),
     );
@@ -419,28 +419,29 @@ class _BrandMark extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          width: 34,
-          height: 34,
-          decoration: BoxDecoration(
-            color: inverted ? Colors.white : kInk,
-            borderRadius: BorderRadius.circular(11),
-          ),
-          child: Icon(
-            Icons.show_chart_rounded,
-            color: inverted ? kInk : Colors.white,
-            size: 19,
-          ),
+          width: 154,
+          height: 154,
+          // decoration: BoxDecoration(
+          //   color: inverted ? Colors.white : kInk,
+          //   borderRadius: BorderRadius.circular(11),
+          // ),
+          child: Image.asset("assets/logo.png"),
+          // child: Icon(
+          //   Icons.show_chart_rounded,
+          //   color: inverted ? kInk : Colors.white,
+          //   size: 19,
+          // ),
         ),
-        const SizedBox(width: 10),
-        Text(
-          'MEZAN',
-          style: GoogleFonts.manrope(
-            color: inverted ? Colors.white : kInk,
-            fontSize: 13,
-            letterSpacing: 2.1,
-            fontWeight: FontWeight.w800,
-          ),
-        ),
+        // const SizedBox(width: 10),
+        // Text(
+        //   'MEZAN',
+        //   style: GoogleFonts.manrope(
+        //     color: inverted ? Colors.white : kInk,
+        //     fontSize: 13,
+        //     letterSpacing: 2.1,
+        //     fontWeight: FontWeight.w800,
+        //   ),
+        // ),
       ],
     );
   }
